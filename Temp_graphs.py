@@ -22,52 +22,55 @@ temp_var = dataset.variables['T']
 lon = dataset.variables['x'][:]
 lat = dataset.variables['y'][:]
 z = dataset.variables['z'][:]
-time_data = dataset.variables['time']
+time_data = dataset.variables['time'][:]
 
 #Temp data at time t=0
-im_data = temp_var[0]
-
-#close dataset
-dataset.close()
+hours = len(time_data)
 
 print("...Generating Plot...\n")
 # Create a Plate Carrée projection
 projection = ccrs.PlateCarree()
 
 # Create a plot with the specified projection
+
 fig, ax = plt.subplots(subplot_kw={'projection': projection})
 
-# Assuming lon and lat are defined
-im_extent = (lon.min(), lon.max(), lat.min(), lat.max())
+#increment by 3 in order to plot data every hour
+for i in range(0, hours-1, 44):
+    im_data = temp_var[i]
+    # Assuming lon and lat are defined
+    im_extent = (lon.min(), lon.max(), lat.min(), lat.max())
 
-# Display the single slice
-mp = ax.imshow(im_data[0], extent=im_extent, cmap='jet', origin='lower')
+    #Display the single slice
+    mp = ax.imshow(im_data[0], extent=im_extent, cmap='jet', origin='lower')
 
-# adding colorbar and adjust the size
-cbar = fig.colorbar(mp, ax=ax)
-cbar.minorticks_on()
-
-#additional feeatures from Cartopy
-states_provinces = cfeature.NaturalEarthFeature(
-        category='cultural',
-        name='admin_1_states_provinces_lines',
-        scale='10m',
-        facecolor='none')
-ax.add_feature(cfeature.BORDERS,edgecolor='blue')
-ax.add_feature(states_provinces, edgecolor='blue')
-ax.add_feature(cfeature.COASTLINE)
+#additional features from Cartopy
+    states_provinces = cfeature.NaturalEarthFeature(
+            category='cultural',
+            name='admin_1_states_provinces_lines',
+            scale='10m',
+            facecolor='none')
+    ax.add_feature(cfeature.BORDERS,edgecolor='blue')
+    ax.add_feature(states_provinces, edgecolor='blue')
+    ax.add_feature(cfeature.COASTLINE)
 
 #adding the long lat grids and enabling the tick labels
-gl = ax.gridlines(draw_labels=True,alpha=0.1)
-gl.top_labels = False
-gl.right_labels = False
+    gl = ax.gridlines(draw_labels=True,alpha=0.1)
+    gl.top_labels = False
+    gl.right_labels = False
 
+ # adding colorbar and adjust the size
+    cbar = fig.colorbar(mp, ax=ax)
+    cbar.minorticks_on()
 
 # Set plot title and labels
-plt.title('Temperature Data')
-plt.xlabel('Longitude')
-plt.ylabel('Latitude')
+    plt.title('Temperature Data at time ' + str(i)+ ' Hours')
+    plt.xlabel('Longitude')
+    plt.ylabel('Latitude')
 
 #Save figure
-plt.savefig("Temp_test.jpg",dpi=330)
-print('Plot Generated\n')
+    plt.savefig("Temp_hr" + str(i/44) + ".jpg",dpi=330)
+
+#close dataset
+dataset.close()
+print('Plots Generated\n')
