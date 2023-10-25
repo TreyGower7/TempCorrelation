@@ -25,21 +25,21 @@ lat = dataset['y'][:]
 hours = len(time)
 print("...Generating Plots...")
 
-# Create a Plate Carrée projection
-projection = ccrs.PlateCarree()
+#increment by 32  in order to plot data for every 8 hours for half the data set
+for i in range(0,288,32):
+    # Create a Plate Carrée projection
+    projection = ccrs.PlateCarree()
 
-# Create a plot with the specified projection
+    # Create a plot with the specified projection
 
-fig, ax = plt.subplots(subplot_kw={'projection': projection})
-
-#increment by 23 in order to plot data for 6 hours
-for i in range(0,hours,72):
-    im_data_z0 = temp_var[i]
+    fig, ax = plt.subplots(subplot_kw={'projection': projection})
+    
+    im_data_z15 = temp_var[i]
         # Assuming lon and lat are defined
     im_extent = (lon.min(), lon.max(), lat.min(), lat.max())
 
         #Display the single slice
-    mp = ax.imshow(im_data_z0[0], extent=im_extent, cmap='jet', origin='lower')
+    mp = ax.imshow(im_data_z15[15], extent=im_extent, cmap='jet', origin='lower')
 
     #additional features from Cartopy
     states_provinces = cfeature.NaturalEarthFeature(
