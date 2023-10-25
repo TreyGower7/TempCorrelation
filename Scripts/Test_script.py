@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 
-fn = '/corral/utexas/hurricane/tgower/har_dataset_02/Pot_Temp_HHar_d02.nc'
+fn = '/corral/utexas/hurricane/tgower/har_dataset_02/Precipt_HHar_d02.nc'
 dataset = xr.open_dataset(fn)
 
 # Get the variable names
@@ -18,7 +18,7 @@ print("------------------------------------------\n")
 
 # Access a specific variable
 print("...Getting Latitudinal and Longitudinal Data...\n")
-temp_var = dataset['T']
+Precip = dataset['RAIN_tot']
 time = dataset['time'][:]
 lon = dataset['x'][:]
 lat = dataset['y'][:]
@@ -34,12 +34,12 @@ projection = ccrs.PlateCarree()
 
 fig, ax = plt.subplots(subplot_kw={'projection': projection})
 
-im_data_z0 = temp_var[400]
+im_data_z0 = Precip[140]
         # Assuming lon and lat are defined
 im_extent = (lon.min(), lon.max(), lat.min(), lat.max())
 
         #Display the single slice
-mp = ax.imshow(im_data_z0[15], extent=im_extent, cmap='jet', origin='lower')
+mp = ax.imshow(im_data_z0, extent=im_extent, cmap='jet', origin='lower')
 
     #additional features from Cartopy
 states_provinces = cfeature.NaturalEarthFeature(
@@ -57,14 +57,12 @@ gl.top_labels = False
 gl.right_labels = False
     # Set plot title and labels
  # adding colorbar and adjust the size
-cbar = fig.colorbar(mp, ax=ax)
-cbar.minorticks_on()
-plt.title('Temperature Data at t= Hours')
+plt.title('Precip at t = 0 Hours')
 plt.xlabel('Longitude')
 plt.ylabel('Latitude')
 
 #Save figure and clear previous
-plt.savefig("tempp1.jpg",dpi=330)
+plt.savefig("Precip.jpg",dpi=330)
 #close dataset
 dataset.close()
 print('Plots Generated\n')

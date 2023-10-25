@@ -18,14 +18,14 @@ print("------------------------------------------\n")
 
 # Access a specific variable
 print("...Getting Latitudinal and Longitudinal Data...\n")
-temp_var = dataset['T']
+Precip_data = dataset['T']
 time = dataset['time'][:]
 lon = dataset['x'][:]
 lat = dataset['y'][:]
 hours = len(time)
 print("...Generating Plots...")
 
-#increment by 24 in order to plot data for every 6 hours for half the data set
+#increment by 24  in order to plot data for every 6 hours for half the data set
 for i in range(0,528,24):
     # Create a Plate Carrée projection
     projection = ccrs.PlateCarree()
@@ -34,12 +34,12 @@ for i in range(0,528,24):
 
     fig, ax = plt.subplots(subplot_kw={'projection': projection})
     
-    im_data_z15 = temp_var[i]
+    im_data = Precip_data[i]
         # Assuming lon and lat are defined
     im_extent = (lon.min(), lon.max(), lat.min(), lat.max())
 
         #Display the single slice
-    mp = ax.imshow(im_data_z15[15], extent=im_extent, cmap='jet', origin='lower')
+    mp = ax.imshow(im_data, extent=im_extent, cmap='jet', origin='lower')
 
     #additional features from Cartopy
     states_provinces = cfeature.NaturalEarthFeature(
@@ -59,12 +59,12 @@ for i in range(0,528,24):
  # adding colorbar and adjust the size
     cbar = fig.colorbar(mp, ax=ax)
     cbar.minorticks_on()
-    plt.title('Temperature Data at t= '+ str((i*15)/60) +' Hours')
+    plt.title('Precipitation Data at t= '+ str((i*15)/60) +' Hours')
     plt.xlabel('Longitude')
     plt.ylabel('Latitude')
 
 #Save figure and clear previous
-    plt.savefig("/corral/utexas/hurricane/tgower/TempCorrelation/Plots/Temp_hr" + str((i*15)/60) + ".jpg",dpi=330)
+    plt.savefig("/corral/utexas/hurricane/tgower/TempCorrelation/Plots/Precip_plots/Precip_hr" + str((i*15)/60) + ".jpg",dpi=330)
     plt.clf()
 #close dataset
 dataset.close()
