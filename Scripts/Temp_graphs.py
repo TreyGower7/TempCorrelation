@@ -64,7 +64,7 @@ for i in range(0,528,24):
     plt.ylabel('Latitude')
 
 #Save figure and clear previous
-    plt.savefig("/corral/utexas/hurricane/tgower/TempCorrelation/Plots/Temp_hr" + str((i*15)/60) + ".jpg",dpi=330)
+    plt.savefig("/corral/utexas/hurricane/tgower/TempCorrelation/Plots/Temp_plots/Temp_hr" + str((i*15)/60) + ".jpg",dpi=330)
     plt.clf()
 #close dataset
 dataset.close()

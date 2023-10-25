@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 
-fn = '/corral/utexas/hurricane/tgower/har_dataset_02/Pot_Temp_HHar_d02.nc'
+fn = '/corral/utexas/hurricane/tgower/har_dataset_02/Precipt_HHar_d02.nc'
 dataset = xr.open_dataset(fn)
 
 # Get the variable names
@@ -18,7 +18,7 @@ print("------------------------------------------\n")
 
 # Access a specific variable
 print("...Getting Latitudinal and Longitudinal Data...\n")
-Precip_data = dataset['T']
+Precip_data = dataset['RAIN_tot']
 time = dataset['time'][:]
 lon = dataset['x'][:]
 lat = dataset['y'][:]
