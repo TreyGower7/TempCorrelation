@@ -3,7 +3,7 @@ import xarray as xr
 
 """
 Caluclating Correlation Coefficients for Temperature and Precipitation data
-(altitude is set constant at z = 15)
+(altitude is set constant at z = 0)
 """
 
 __author__ = "Trey Gower"
