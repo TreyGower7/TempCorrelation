@@ -43,7 +43,7 @@ def correlation_coeff(t,T,P):
     if type(t) != list:
         #setting default t to whole dataset for any parameter that is not a input range
         t = [1,528]
-    #calculate dp/dt using pressure data \(\lamda)
+    #calculate dp using pressure data \(\lamda)
     for i in range(t[0],t[1],1):
         #Calculate Correlation
         
