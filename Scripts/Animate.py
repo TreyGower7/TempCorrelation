@@ -9,7 +9,7 @@ image_frames_Press = []
 hours = 132
 
 #Plots taken every 8 hours
-for i in range(0,hours,6):
+for i in range(0,hours,3):
     new_frame_T = PIL.Image.open(r'/corral/utexas/hurricane/tgower/TempCorrelation/Plots/Temp_plots/Temp_hr' + str(i) + '.0.jpg')
     image_frames_T.append(new_frame_T)
 
