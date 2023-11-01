@@ -25,8 +25,8 @@ lat = dataset['y'][:]
 hours = len(time)
 print("...Generating Plots...")
 
-#increment by 24 in order to plot data for every 6 hours for half the data set
-for i in range(0,528,24):
+#increment by 12 in order to plot data for every 3 hours
+for i in range(0,528,12):
     # Create a Plate Carrée projection
     projection = ccrs.PlateCarree()
 
@@ -58,6 +58,7 @@ for i in range(0,528,24):
     # Set plot title and labels
  # adding colorbar and adjust the size
     cbar = fig.colorbar(mp, ax=ax)
+    cbar.set_label('Pascals (Pa)', rotation = -90, labelpad = 12)
     cbar.minorticks_on()
     plt.title('Pressure Data at t= '+ str((i*15)/60) +' Hours')
     plt.xlabel('Longitude')
