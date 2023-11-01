@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
+from Temp_Precip_Cor import find_dp
 
 fn = '/corral/utexas/hurricane/tgower/har_dataset_02/Precipt_HHar_d02.nc'
 dataset = xr.open_dataset(fn)
@@ -23,10 +24,14 @@ time = dataset['time'][:]
 lon = dataset['x'][:]
 lat = dataset['y'][:]
 hours = len(time)
+
+#Finding change in precipitation every 3 hours
+dp = find_dp(Precip_data)
+
 print("...Generating Plots...")
 
-#increment by 24  in order to plot data for every 6 hours for half the data set
-for i in range(0,528,24):
+#graphing change in precipitation every 3 hours
+for i in range(len(dp)):
     # Create a Plate Carrée projection
     projection = ccrs.PlateCarree()
 
@@ -34,7 +39,7 @@ for i in range(0,528,24):
 
     fig, ax = plt.subplots(subplot_kw={'projection': projection})
     
-    im_data = Precip_data[i]
+    im_data = dp[i]
         # Assuming lon and lat are defined
     im_extent = (lon.min(), lon.max(), lat.min(), lat.max())
 
@@ -58,6 +63,7 @@ for i in range(0,528,24):
     # Set plot title and labels
  # adding colorbar and adjust the size
     cbar = fig.colorbar(mp, ax=ax)
+    cbar.set_label('milimeters (mm)', rotation = -90, labelpad = 12)
     cbar.minorticks_on()
     plt.title('Precipitation Data at t= '+ str((i*15)/60) +' Hours')
     plt.xlabel('Longitude')
