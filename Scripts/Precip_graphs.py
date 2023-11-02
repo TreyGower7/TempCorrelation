@@ -3,7 +3,25 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
-from Temp_Precip_Cor import find_dp
+
+
+def find_dp(Precip_ds):
+    """ Calculate change in Precipitation data for every 3 hour time step
+
+     Args: Precipitation dataset
+
+     Returns: The change in precipitation from Precip_ds(i)-Precip_ds(i-12)
+
+    """
+    dp = []
+    #index by 12 for data every 3 hours
+    for i in range(0,528,12):
+        if i >=0:
+            dp.append(Precip_ds[i]-Precip_ds[i-12])
+
+    # Convert the list of differences to an xarray DataArray
+    dp_xr = xr.concat(dp, dim='time')
+    return dp_xr
 
 fn = '/corral/utexas/hurricane/tgower/har_dataset_02/Precipt_HHar_d02.nc'
 dataset = xr.open_dataset(fn)
