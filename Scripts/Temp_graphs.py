@@ -34,12 +34,12 @@ for i in range(0,528,12):
 
     fig, ax = plt.subplots(subplot_kw={'projection': projection})
     
-    im_data_z15 = temp_var[i]
+    im_data = temp_var[i]
         # Assuming lon and lat are defined
     im_extent = (lon.min(), lon.max(), lat.min(), lat.max())
 
         #Display the single slice
-    mp = ax.imshow(im_data_z15[15], extent=im_extent, cmap='jet', origin='lower')
+    mp = ax.imshow(im_data[0], extent=im_extent, cmap='jet', origin='lower')
 
     #additional features from Cartopy
     states_provinces = cfeature.NaturalEarthFeature(
