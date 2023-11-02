@@ -83,12 +83,12 @@ for i in range(len(dp)):
     cbar = fig.colorbar(mp, ax=ax)
     cbar.set_label('milimeters (mm)', rotation = -90, labelpad = 12)
     cbar.minorticks_on()
-    plt.title('Precipitation Data at t= '+ str((i*15)/60) +' Hours')
+    plt.title('Precipitation Data at t= '+ str(i*3) +' Hours')
     plt.xlabel('Longitude')
     plt.ylabel('Latitude')
 
 #Save figure and clear previous
-    plt.savefig("/corral/utexas/hurricane/tgower/TempCorrelation/Plots/Precip_plots/Precip_hr" + str((i*15)/60) + ".jpg",dpi=330)
+    plt.savefig("/corral/utexas/hurricane/tgower/TempCorrelation/Plots/Precip_plots/Precip_hr" + str(i*3) + ".jpg",dpi=330)
     plt.clf()
 #close dataset
 dataset.close()
