@@ -13,7 +13,7 @@ for i in range(0,hours,3):
     new_frame_T = PIL.Image.open(r'/corral/utexas/hurricane/tgower/TempCorrelation/Plots/Temp_plots/Temp_hr' + str(i) + '.0.jpg')
     image_frames_T.append(new_frame_T)
 
-    new_frame_P = PIL.Image.open(r'/corral/utexas/hurricane/tgower/TempCorrelation/Plots/Precip_plots/Precip_hr' + str(i) + '.0.jpg')
+    new_frame_P = PIL.Image.open(r'/corral/utexas/hurricane/tgower/TempCorrelation/Plots/Precip_plots/Precip_hr' + str(i) + '.jpg')
     image_frames_P.append(new_frame_P)
     
     new_frame_Press = PIL.Image.open(r'/corral/utexas/hurricane/tgower/TempCorrelation/Plots/Press_plots/Press_hr' + str(i) + '.0.jpg')
