@@ -26,7 +26,8 @@ def find_dp(Precip_ds):
     dp_xr = xr.concat(dp, dim='time')
     return dp_xr
 
-def correlation_coeff(t,T,P):
+
+def correlation_coeff(t,T,dP):
   """ Calculate correlation between Temperature and Precipitation
 
      Args: t(List containing two values) to acces a specific time range, Temperature dataset, and precipitation dataset
@@ -34,17 +35,17 @@ def correlation_coeff(t,T,P):
      Returns: List containing correlation coefficients for the full set and sliced sets
 
     """
+    #adjust for time values given
     if type(t) != list:
         #setting default t to whole dataset for any parameter that is not an input range
-        t = [1,528]
-<<<<<<< HEAD
-    #calculate dp using pressure data \(\lamda)
-=======
->>>>>>> e19a905 (Updated every 3 hours)
-    for i in range(t[0],t[1],1):
+        t = [1,43]
+
+    #Updated every 3 hours
+    for i in range(t[0],t[1]),1):
         #Calculate Correlation
         
-        Ctp =
+        CTP = np.dot(T,dP) / np.sqrt(np.dot(T,T)*np.dot(dP,dP)) 
+    return CTP
 
 def main():
 
@@ -55,19 +56,36 @@ def main():
     ds_P = xr.open_dataset(path1)
 
     # Access a specific variable
-    print("...Getting Temperature and Precipitation Data...\n")
+    print("\n...Getting Temperature and Precipitation Data...")
     print("_________________________________________________\n")
 
     #Get Data
     Temp_data = ds_T['T']
     Precip_data = ds_P['RAIN_tot']
-    dp = find_dp(Precip_data)    
-
-# Correlation
-    print("...Finding Correlation Coefficient...\n")
+    print("...Populating Subsets...")
     print("_________________________________________________\n")
-    correlation = correlation_coeff()
+    dp = find_dp(Precip_data)    
+   
+    #Subset of the Temperature Data
+    #T_sub = []
+    #index by 12 for data every 3 hours
+    #for i in range(0,528,12):
+    #    T_sub.append(Temp_data[i])
+
+    # Convert the list of differences to an xarray DataArray
+    #T_xr = xr.concat(T_sub, dim='time')
+
+    print(T_xr)
+    print(dp)
+# Correlation
+    print("...Finding Correlation Coefficient for each 3 hour time step...")
+    print("_________________________________________________\n")
+    correlation = correlation_coeff(0,Temp_data,dp)
     
+    #print correlation at each 3 hour time step
+    for i in range(len(correlation)):
+        print('Correlation for t = ' + str(i*3) + ': ' + correlation[i] + '\n')
+
     #close datasets
     ds_T.close()
     ds_P.close()
