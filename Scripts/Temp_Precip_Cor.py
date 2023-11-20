@@ -25,6 +25,39 @@ def find_dp(Precip_ds):
     # Convert the list of differences to an xarray DataArray
     dp_xr = xr.concat(dp, dim='time')
     return dp_xr
+   
+def mean(values):
+    return sum(values) / len(values)
+
+#calculate the correlation coefficient
+def ccf(T, dp):
+    x_mean = mean(T)
+    y_mean = mean(dp)
+
+    numer = sum((xi - x_mean) * (yi - y_mean) for xi, yi in zip(T, dp))
+    denom_T = sum((xi - x_mean)**2 for xi in T)
+    denom_dp = sum((yi - y_mean)**2 for yi in dp)
+
+    correlation = numer / np.sqrt(denom_T * denom_dp)
+
+    return correlation
+
+#calculate the correlation coefficient
+def ccf2(T,dp):
+    numer = np.dot(T,dp)
+    denom1 = np.dot(T,T)
+    denom2 = np.dot(dp,dp)
+
+    coeff = numer / np.sqrt(denom1*denom2)
+
+    return coeff
+
+
+def txt_w(ctp,num):
+    f = open(f'Correlation_Coefficients{num}.txt','w')
+    for i in range(len(ctp)):
+        f.write(f't (hours) = {i*3}: Correlation Coefficient = {ctp[i]}\n\n')
+    f.close()
 
 def main():
 
@@ -38,35 +71,45 @@ def main():
     print("\n...Getting Temperature and Precipitation Data...")
     print("_________________________________________________\n")
 
-    #Get Data
+# Get Data
     Temp_data = ds_T['T']
     Precip_data = ds_P['RAIN_tot']
     print("...Populating Subsets...")
     print("_________________________________________________\n")
     dp = find_dp(Precip_data)    
-   
-    #Subset of the Temperature Data
-    T_sub = []
-    #index by 12 for data every 3 hours
-    for i in range(0,528,12):
-        T_sub.append(Temp_data[i][0])
-
-    #Convert the list of differences to an xarray DataArray
-    T_xr = xr.concat(T_sub, dim='time')
     
-    print(T_xr.dims)
-    print(T_xr.attrs)
-    print(dp.dims)
-    print(dp.attrs)
 # Correlation
     print("...Finding Correlation Coefficient for each 3 hour time step...")
     print("_________________________________________________\n")
+
     ctp = []
     for i in range(len(dp)):
-        ctp.append(np.corrcoef(T_xr[i],dp[i])[0,1])
+        if i != 0:
+            ctp.append(np.corrcoef(Temp_data[i+12][0].values.flatten(),dp[i].values.flatten())[0,1])
+        else:
+            ctp.append(np.corrcoef(Temp_data[0][0].values.flatten(),dp[i].values.flatten())[0,1])
     
+    ctp2 = []
+    for i in range(len(dp)):
+        if i != 0:
+            ctp2.append(ccf(Temp_data[i+12][0].values.flatten(),dp[i].values.flatten()))
+        else:
+            ctp2.append(ccf(Temp_data[0][0].values.flatten(),dp[0].values.flatten()))
+    
+    ctp3 = []
+    for i in range(len(dp)):
+        if i != 0:
+            ctp3.append(ccf2(Temp_data[i+12][0].values.flatten(),dp[i].values.flatten()))
+        else:
+            ctp3.append(ccf2(Temp_data[0][0].values.flatten(),dp[0].values.flatten()))
+
+# Write outputs to text file
+    txt_w(ctp,1)
+    txt_w(ctp2,2)
+    txt_w(ctp3,3)
+
     #print correlation at each 3 hour time step
-    print(ctp)
+    print('Coefficients saved to Correlation_Coefficients text files')
     #close datasets
     ds_T.close()
     ds_P.close()
