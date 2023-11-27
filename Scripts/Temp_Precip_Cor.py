@@ -19,7 +19,7 @@ def find_dp(Precip_ds):
     dp = []
     #index by 12 for data every 3 hours
     for i in range(0,528,12):
-        if i >=0:
+        if i >=0 && Precip_ds[i].values != 0:
             dp.append(Precip_ds[i]-Precip_ds[i-12])
 
     # Convert the list of differences to an xarray DataArray
@@ -31,6 +31,11 @@ def mean(values):
 
 #calculate the correlation coefficient
 def ccf(T, dp):
+    
+    #To account for the zeros in precipitation and to ensure indices between Temp and Precipitation are uniform we can calculate
+    #the mean for temp and precipitation with the same for loops to ensure wherever Precipitation is zero the temperature value at that point 
+    #is not getting added into the equation
+
     x_mean = mean(T)
     y_mean = mean(dp)
 
@@ -41,17 +46,6 @@ def ccf(T, dp):
     correlation = numer / np.sqrt(denom_T * denom_dp)
 
     return correlation
-
-#calculate the correlation coefficient
-def ccf2(T,dp):
-    numer = np.dot(T,dp)
-    denom1 = np.dot(T,T)
-    denom2 = np.dot(dp,dp)
-
-    coeff = numer / np.sqrt(denom1*denom2)
-
-    return coeff
-
 
 def txt_w(ctp,num):
     f = open(f'Correlation_Coefficients{num}.txt','w')
@@ -78,10 +72,12 @@ def main():
     print("_________________________________________________\n")
     dp = find_dp(Precip_data)    
     
+    print(Temp_data[0][0].dims)
+    print(dp[0].dims)
 # Correlation
     print("...Finding Correlation Coefficient for each 3 hour time step...")
     print("_________________________________________________\n")
-
+    
     ctp = []
     for i in range(len(dp)):
         if i != 0:
@@ -95,13 +91,6 @@ def main():
             ctp2.append(ccf(Temp_data[i+12][0].values.flatten(),dp[i].values.flatten()))
         else:
             ctp2.append(ccf(Temp_data[0][0].values.flatten(),dp[0].values.flatten()))
-    
-    ctp3 = []
-    for i in range(len(dp)):
-        if i != 0:
-            ctp3.append(ccf2(Temp_data[i+12][0].values.flatten(),dp[i].values.flatten()))
-        else:
-            ctp3.append(ccf2(Temp_data[0][0].values.flatten(),dp[0].values.flatten()))
 
 # Write outputs to text file
     txt_w(ctp,1)
