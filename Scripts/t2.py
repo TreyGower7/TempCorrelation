@@ -23,9 +23,9 @@ ds = dataset['RAIN_tot'][48]
 ds_no_zeros = ds.where(ds != 0)
 
 # Perform calculations on the modified dataset
-result = ds_no_zeros.mean(dim=('p','r'))  # Replace 'your_variable' with the variable you're interested in
+result = ds_no_zeros.mean(dim=('p','r'))
 
-# Display the original dataset, the modified dataset, and the result
+
 print("Original Dataset:")
 print(ds)
 
