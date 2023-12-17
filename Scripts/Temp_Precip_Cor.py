@@ -1,5 +1,6 @@
 import numpy as np
 import xarray as xr
+import numpy.ma as ma
 
 """
 Caluclating Correlation Coefficients for Temperature and Precipitation data
@@ -8,21 +9,6 @@ Caluclating Correlation Coefficients for Temperature and Precipitation data
 
 __author__ = "Trey Gower"
 
-def rm_zeros(dp,T):
-    """ Removing zero values of precipitation and the corresponding temperature values
-
-     Args: Precipitation and temperature at time t = i for every 3 hour time step
-
-     Returns: Two new adjusted numpy arrays excluding zero values of precipitation
-
-    """
-    #using numpy optimized algorithm to get the indices of the zeros
-    #for i in range(len(dp)):
-    zero_indices = np.where(dp == 0)
-    new_dp = np.delete(dp, zero_indices)
-    new_T = np.delete(T, zero_indices)
-    
-    return new_dp, new_T 
 
 def find_dp(Precip_ds):
 
@@ -101,10 +87,14 @@ def main():
     
     ctp = []
     for i in range(len(dp)):
+        #Skip time step t = 0
         if i != 0:
-            print('...Removing zeros for t = ' + str(i*3) + 'hrs...')
-            dpnew, Tnew = rm_zeros(dp[i].values.flatten(),Temp_data[i+12][0].values.flatten())
-            ctp.append(np.corrcoef(Tnew,dpnew)[0,1])
+            print('...Calculating t = ' + str(i*3) + 'hrs...')
+            dpnew = np.where(dp[i] == 0, np.nan, dp[i])
+            #Masking the Nan values for precipitation
+            mask_dp = ma.masked_invalid(dpnew)
+            Tnew = Temp_data[i+12][0].values.flatten()
+            ctp.append(ma.corrcoef(Tnew,mask_dp.flatten())[0,1])
         else:
             continue
 
