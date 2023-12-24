@@ -3,7 +3,7 @@ import xarray as xr
 import numpy.ma as ma
 
 """
-Caluclating Correlation Coefficients for Temperature and Precipitation data
+Calculating Correlation Coefficients for Temperature and Precipitation data
 (altitude is set constant at z = 0)
 """
 
@@ -29,28 +29,24 @@ def find_dp(Precip_ds):
     dp_xr = xr.concat(dp, dim='time')
     return dp_xr
    
-#def mean(values):
-#    return sum(values) / len(values)
-
-#calculate the correlation coefficient (This works but is less optimal)
-#def ccf(T, dp):
-       
-#    x_mean = mean(T)
-#    y_mean = mean(dp)
-
-#    numer = sum((xi - x_mean) * (yi - y_mean) for xi, yi in zip(T, dp))
-#    denom_T = sum((xi - x_mean)**2 for xi in T)
-#    denom_dp = sum((yi - y_mean)**2 for yi in dp)
-
-#    correlation = numer / np.sqrt(denom_T * denom_dp)
-
-#    return correlation
-
 def txt_w(ctp):
     f = open(f'Correlation_Coefficients.txt','w')
     for i in range(1,len(ctp),1):
         f.write(f't (hours) = {i*3}: Correlation Coefficient = {ctp[i]}\n\n')
     f.close()
+
+def adjust_nan_T(dp, T):
+    """
+    In order for the average in the temperature data to reflect the precipitation values I need to remove the indices that are nan in precipitation
+
+    Args:
+
+    Returns:
+    a nan value adjusted dataset for temperature
+    """
+    zero_indices = np.where(dp == 0)
+    T[zero_indices] = np.nan
+    return T
 
 def main():
 
@@ -86,17 +82,21 @@ def main():
     print("_________________________________________________\n")
     
     ctp = []
+    ctp_coarse = []
+    print(len(Temp_data))
     for i in range(len(dp)):
         #Skip time step t = 0
-        if i != 0:
-            print('...Calculating t = ' + str(i*3) + 'hrs...')
-            dpnew = np.where(dp[i] == 0, np.nan, dp[i])
-            #Masking the Nan values for precipitation
-            mask_dp = ma.masked_invalid(dpnew)
-            Tnew = Temp_data[i+12][0].values.flatten()
-            ctp.append(ma.corrcoef(Tnew,mask_dp.flatten())[0,1])
-        else:
-            continue
+        print('...Calculating t = ' + str(i*3) + 'hrs...')
+        dpnew = np.where(dp[i] == 0, np.nan, dp[i])
+        #Masking the Nan values for precipitation
+        mask_dp = ma.masked_invalid(dpnew)
+
+        Tnew = Temp_data[i*12][0].values.flatten()
+        #zeroing out corresponding temperature values with nan
+        nan_T = adjust_nan_T(dp[i].values.flatten(), Tnew) 
+        mask_T = ma.masked_invalid(nan_T)
+        
+        ctp.append(ma.corrcoef(Tnew,mask_dp.flatten())[0,1])
 
 # Write outputs to text file
     txt_w(ctp)

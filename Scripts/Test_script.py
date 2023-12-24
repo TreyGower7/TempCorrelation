@@ -1,19 +1,9 @@
-import xarray as xr
 import numpy as np
-import matplotlib.pyplot as plt
-import cartopy.crs as ccrs
-import cartopy.feature as cfeature
+import xarray as xr
+import numpy.ma as ma
 
-def rm_zero(dp):
-    for i in range(len(dp)):
-        #print(len(dp[i]))
-     #   for j in range(len(dp[i])):
-    #temp = np.asarray(dp[1])
-    #print(temp)
-    #temp = temp[~np.all(temp == 0, axis = 1)]
-    return temp
-#Need to remove 0s from precipitation data and somehow match temp and precip data
 def find_dp(Precip_ds):
+
     """ Calculate change in Precipitation data for every 3 hour time step
 
      Args: Precipitation dataset
@@ -31,37 +21,76 @@ def find_dp(Precip_ds):
     dp_xr = xr.concat(dp, dim='time')
     return dp_xr
 
-def main():
+def adjust_nan_T(dp, T):
+    """
+    In order for the average in the temperature data to reflect the precipitation values I need to remove the indices that are nan in precipitation
 
-    fn = '/corral/utexas/hurricane/tgower/har_dataset_02/Precipt_HHar_d02.nc'
-    dataset = xr.open_dataset(fn)
+    Args:
 
-# Get the variable names
-    variable_names = dataset.keys()
+    Returns:
+    a nan value adjusted dataset for temperature
+    """
+    zero_indices = np.where(dp == 0)
+    T[zero_indices] = np.nan
+    return T
 
-#Key information
-    print("\nKey Names: ")
-    print(str(variable_names) + "\n")
-    print("Times taken with a step size of 15 mins\n")
-    print("------------------------------------------\n")
+def coarse_grain(ds):
+    """
+    Coarse-grain a multidimensional array by grouping values based on a specified factor.
 
-# Access a specific variable
-    print("...Getting Latitudinal and Longitudinal Data...\n")
-    Precip_data = dataset['RAIN_tot']
-    lon = dataset['x'][:]
-    lat = dataset['y'][:]
+    Args:
+    Ds = a dataset, factor = the coarse graining factor 
+    Returns:
+    coarse_ds = the coarse-grained array
+    """
+    #In order for the average in the temperature data to reflect the precipitation values I need to remove the indices that are nan in precipitation
+    m = len(ds)
+    #The following line only works because I know I want my matrices to be 8x10 
+    n = len(ds[0]-9)
+#    for i in range(m)
+    #Create the sub matrix and caluclate the mean for each
+    for i in range(0,m,8):
+        for j in range(0,n,10):
+            sub_ds= ds[i:i+8, j:j+10]
 
-    dp = find_dp(Precip_data)
-    print(dp[0][0].values)
+            
+    
+    #average over the sub matrix ignoring masked values
+    avg = ma.mean()
+    return ds
 
-    dp = rm_zero(dp)
+path = '/corral/utexas/hurricane/tgower/har_dataset_02/Pot_Temp_HHar_d02.nc'
+ds_T = xr.open_dataset(path)
 
-    #print(lat[0][400].values)
-    print(dp[0])
-#close dataset
-    dataset.close()
+path1 = '/corral/utexas/hurricane/tgower/har_dataset_02/Precipt_HHar_d02.nc'
+ds_P = xr.open_dataset(path1)
 
-if __name__ == "__main__":
-    """ This is executed when run from the command line """
-    main()
+Temp_ds = ds_T['T']
+
+Precip_data = ds_P['RAIN_tot']
+print("...Populating Subsets...")
+print("_________________________________________________\n")
+dp = find_dp(Precip_data)
+
+dpnew = np.where(dp[3] == 0, np.nan, dp[3])
+#Masking the Nan values for precipitation
+mask_dp = ma.masked_invalid(dpnew)
+
+Tnew = Temp_ds[3+12][0].values.flatten()
+#zeroing out corresponding temperature values with nan
+nan_T = adjust_nan_T(dp[3].values.flatten(), Tnew)
+mask_T = ma.masked_invalid(nan_T)
+
+print(mask_T)
+coarse_dp = coarse_grain(mask_dp)
+coarse_T = coarse_grain(mask_T)
+
+#print("Original data:")
+#print(len(Temp_ds))
+#print(len(Temp_ds[0]))
+#print(Temp_ds)
+#print("\nCoarsened data:")
+#print(len(coarsened_data))
+#print(len(coarsened_data[0]))
+#print(coarsened_data)
 
