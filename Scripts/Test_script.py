@@ -39,25 +39,36 @@ def coarse_grain(ds):
     Coarse-grain a multidimensional array by grouping values based on a specified factor.
 
     Args:
-    Ds = a dataset, factor = the coarse graining factor 
+    Ds = a dataset where the nan values are not yet masked 
     Returns:
-    coarse_ds = the coarse-grained array
+    coarse_avg = the coarse grained averages
     """
+    coarse_avg = np.zeros((66,1))
     #In order for the average in the temperature data to reflect the precipitation values I need to remove the indices that are nan in precipitation
-    m = len(ds)
-    #The following line only works because I know I want my matrices to be 8x10 
-    n = len(ds[0]-9)
-#    for i in range(m)
+    #The following two lines only work because I know I want my matrices to be 8x10 (I am intentionally excluding the last 6 hours)
+    m = len(ds)-24
+    n = len(ds[0])-9
+    
+    j = 0
     #Create the sub matrix and caluclate the mean for each
     for i in range(0,m,8):
-        for j in range(0,n,10):
-            sub_ds= ds[i:i+8, j:j+10]
-
+        #Need j to increment by 2 in order for our second index to reach 660
+        if i != 0:
+            #Must increment i value by 1 as to not include the previous index
+            sub_ds= ds[(i+1):i+8, (i+j)+1:(i+j)+10] 
             
-    
-    #average over the sub matrix ignoring masked values
-    avg = ma.mean()
-    return ds
+            mask_ds= ma.masked_invalid(sub_ds)
+            coarse_avg[i//8] = ma.mean(mask_ds)
+        
+        if i == 0:
+            sub_ds= ds[0:8, 0:10]
+            
+            mask_ds= ma.masked_invalid(sub_ds)
+            coarse_avg[i//8] = ma.mean(mask_ds)
+        j +=2
+
+        #average the values in the submatrix and store
+    return coarse_avg
 
 path = '/corral/utexas/hurricane/tgower/har_dataset_02/Pot_Temp_HHar_d02.nc'
 ds_T = xr.open_dataset(path)
@@ -74,23 +85,12 @@ dp = find_dp(Precip_data)
 
 dpnew = np.where(dp[3] == 0, np.nan, dp[3])
 #Masking the Nan values for precipitation
-mask_dp = ma.masked_invalid(dpnew)
-
-Tnew = Temp_ds[3+12][0].values.flatten()
+Tnew = Temp_ds[3*12][0].values.flatten()
 #zeroing out corresponding temperature values with nan
 nan_T = adjust_nan_T(dp[3].values.flatten(), Tnew)
-mask_T = ma.masked_invalid(nan_T)
+bruh = nan_T.reshape(Temp_ds[3*12][0].shape)
 
-print(mask_T)
-coarse_dp = coarse_grain(mask_dp)
-coarse_T = coarse_grain(mask_T)
+coarse_dp = coarse_grain(dpnew)
+coarse_T = coarse_grain(bruh)
 
-#print("Original data:")
-#print(len(Temp_ds))
-#print(len(Temp_ds[0]))
-#print(Temp_ds)
-#print("\nCoarsened data:")
-#print(len(coarsened_data))
-#print(len(coarsened_data[0]))
-#print(coarsened_data)
-
+print(coarse_dp)
