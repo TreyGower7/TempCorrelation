@@ -38,7 +38,7 @@ def txt_w(ctp, state):
     for i in range(1,len(ctp),1):
         f.write(f't (hours) = {i*3}: Correlation Coefficient = {ctp[i]}\n\n')
     f.close()
-
+    return 'Coefficients saved to Correlation_Coefficients text files'
 def adjust_nan_T(dp, T):
     """
     In order for the average in the temperature data to reflect the precipitation values I need to remove the indices that are nan in precipitation
@@ -133,20 +133,24 @@ def main():
 
         #Extra step #zeroing out corresponding temperature values with nan for coarse graining
         nan_T = adjust_nan_T(dp[i].values.flatten(), Tnew)
+
+        #revert Temp back to 2d for coarse graining
         nan_T = nan_T.reshape(Temp_data[i*12][0].shape)
         
         #Calculate Coarse grained averages for sub matrices (masking doesnt occur until function coarse_grain is called here)
         coarse_dp = coarse_grain(dpnew)
         coarse_T = coarse_grain(nan_T)
-
+        
+        #Mask averages that are close to zero
+        coarse_dp = np.where(coarse_dp == 0, np.nan, coarse_dp)
+        coarse_T = np.where(coarse_T == 0, np.nan, coarse_T)
+        
         ctp_coarse.append(ma.corrcoef(coarse_T,coarse_dp)[0,1])
 
 # Write outputs to text file
     txt_w(ctp,0)
     txt_w(ctp_coarse, 1)
 
-    #print correlation at each 3 hour time step
-    print('Coefficients saved to Correlation_Coefficients text files')
     #close datasets
     ds_T.close()
     ds_P.close()
