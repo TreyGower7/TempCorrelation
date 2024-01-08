@@ -21,7 +21,7 @@ def find_dp(Precip_ds):
     """
     dp = []
     #index by 12 for data every 3 hours
-    for i in range(0,528,12):
+    for i in range(0,312,12):
         if i >=0:
             dp.append(Precip_ds[i]-Precip_ds[i-12])
 

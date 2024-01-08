@@ -15,7 +15,7 @@ def find_dp(Precip_ds):
     """
     dp = []
     #index by 12 for data every 3 hours
-    for i in range(0,528,12):
+    for i in range(0,312,12):
         if i >=0:
             dp.append(Precip_ds[i]-Precip_ds[i-12])
 
@@ -23,7 +23,7 @@ def find_dp(Precip_ds):
     dp_xr = xr.concat(dp, dim='time')
     return dp_xr
 
-fn = '/corral/utexas/hurricane/tgower/har_dataset_02/Precipt_HHar_d02.nc'
+fn = '/corral/utexas/hurricane/tgower/ida_dataset_02/Precipt_HIDA_d02.nc'
 dataset = xr.open_dataset(fn)
 
 # Get the variable names
@@ -88,7 +88,7 @@ for i in range(len(dp)):
     plt.ylabel('Latitude')
 
 #Save figure and clear previous
-    plt.savefig("/corral/utexas/hurricane/tgower/TempCorrelation/Plots/Precip_plots/Precip_hr" + str(i*3) + ".jpg",dpi=330)
+    plt.savefig("/corral/utexas/hurricane/tgower/TempCorrelation/Plots/Plot_IDA_02/Precip_plots/Precip_hr" + str(i*3) + ".jpg",dpi=330)
     plt.clf()
 #close dataset
 dataset.close()

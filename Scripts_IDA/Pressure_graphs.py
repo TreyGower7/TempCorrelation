@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 
-fn = '/corral/utexas/hurricane/tgower/har_dataset_02/Pressu_HHar_d02.nc'
+fn = '/corral/utexas/hurricane/tgower/ida_dataset_02/Pressu_HIda_d02.nc'
 dataset = xr.open_dataset(fn)
 
 # Get the variable names
@@ -26,7 +26,7 @@ hours = len(time)
 print("...Generating Plots...")
 
 #increment by 12 in order to plot data for every 3 hours
-for i in range(0,528,12):
+for i in range(0,312,12):
     # Create a Plate Carrée projection
     projection = ccrs.PlateCarree()
 
@@ -65,7 +65,7 @@ for i in range(0,528,12):
     plt.ylabel('Latitude')
 
 #Save figure and clear previous
-    plt.savefig("/corral/utexas/hurricane/tgower/TempCorrelation/Plots/Press_plots/Press_hr" + str((i*15)/60) + ".jpg",dpi=330)
+    plt.savefig("/corral/utexas/hurricane/tgower/TempCorrelation/Plots/Plot_IDA_02/Press_plots/Press_hr" + str((i*15)/60) + ".jpg",dpi=330)
     plt.clf()
 #close dataset
 dataset.close()
