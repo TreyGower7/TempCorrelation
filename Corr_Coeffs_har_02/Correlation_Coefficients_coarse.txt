@@ -1,0 +1,86 @@
+t (hours) = 3: Correlation Coefficient = -0.38696832618866445
+
+t (hours) = 6: Correlation Coefficient = 0.09121562764564677
+
+t (hours) = 9: Correlation Coefficient = -0.5524428695743624
+
+t (hours) = 12: Correlation Coefficient = -0.17506324039268628
+
+t (hours) = 15: Correlation Coefficient = -0.6093941208236033
+
+t (hours) = 18: Correlation Coefficient = -0.6514775794298879
+
+t (hours) = 21: Correlation Coefficient = -0.20450971815355018
+
+t (hours) = 24: Correlation Coefficient = -0.08820183933872187
+
+t (hours) = 27: Correlation Coefficient = -0.632209483715186
+
+t (hours) = 30: Correlation Coefficient = 0.09782609956810248
+
+t (hours) = 33: Correlation Coefficient = 0.35249204544581636
+
+t (hours) = 36: Correlation Coefficient = 0.11208091736497973
+
+t (hours) = 39: Correlation Coefficient = 0.17909321154278468
+
+t (hours) = 42: Correlation Coefficient = 0.11018115807111321
+
+t (hours) = 45: Correlation Coefficient = -0.2522640823285282
+
+t (hours) = 48: Correlation Coefficient = -0.36342589278791093
+
+t (hours) = 51: Correlation Coefficient = 0.14026975870597483
+
+t (hours) = 54: Correlation Coefficient = 0.2111338641074858
+
+t (hours) = 57: Correlation Coefficient = 0.19546803857190184
+
+t (hours) = 60: Correlation Coefficient = -0.02306435941870054
+
+t (hours) = 63: Correlation Coefficient = -0.0066452491948713836
+
+t (hours) = 66: Correlation Coefficient = -0.466018131562033
+
+t (hours) = 69: Correlation Coefficient = -0.7395073425799045
+
+t (hours) = 72: Correlation Coefficient = -0.6572776223011135
+
+t (hours) = 75: Correlation Coefficient = -0.6455910878580865
+
+t (hours) = 78: Correlation Coefficient = -0.6839494065526606
+
+t (hours) = 81: Correlation Coefficient = -0.5669884665334985
+
+t (hours) = 84: Correlation Coefficient = -0.33617462231353623
+
+t (hours) = 87: Correlation Coefficient = -0.36480391204726825
+
+t (hours) = 90: Correlation Coefficient = 0.33212468964303415
+
+t (hours) = 93: Correlation Coefficient = -0.02556143797167291
+
+t (hours) = 96: Correlation Coefficient = -0.31715689748349724
+
+t (hours) = 99: Correlation Coefficient = -0.045443783783044304
+
+t (hours) = 102: Correlation Coefficient = -0.40647737723980815
+
+t (hours) = 105: Correlation Coefficient = -0.4100281458147734
+
+t (hours) = 108: Correlation Coefficient = -0.5208222131716758
+
+t (hours) = 111: Correlation Coefficient = -0.591934313551096
+
+t (hours) = 114: Correlation Coefficient = -0.6438349524799093
+
+t (hours) = 117: Correlation Coefficient = -0.3022322726364117
+
+t (hours) = 120: Correlation Coefficient = 0.4949805359641895
+
+t (hours) = 123: Correlation Coefficient = 0.08076487988148234
+
+t (hours) = 126: Correlation Coefficient = 0.039449027098541235
+
+t (hours) = 129: Correlation Coefficient = -0.368180005786315
+
