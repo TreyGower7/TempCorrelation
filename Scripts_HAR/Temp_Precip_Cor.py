@@ -141,12 +141,18 @@ def main():
         coarse_dp = coarse_grain(dpnew)
         coarse_T = coarse_grain(nan_T)
         
+
         #Mask averages that are close to zero
         coarse_dp = np.where(coarse_dp == 0, np.nan, coarse_dp)
         coarse_T = np.where(coarse_T == 0, np.nan, coarse_T)
         
-        ctp_coarse.append(ma.corrcoef(coarse_T,coarse_dp)[0,1])
-
+        
+        #Masking nan values
+        mask_cdp = ma.masked_invalid(coarse_dp)
+        mask_cT = ma.masked_invalid(coarse_T)
+        
+        ctp_coarse.append(ma.corrcoef(mask_cT.flatten(),mask_cdp.flatten())[0,1])
+    
 # Write outputs to text file
     txt_w(ctp,0)
     txt_w(ctp_coarse, 1)
