@@ -1,7 +1,7 @@
 import numpy as np
 import xarray as xr
 import numpy.ma as ma
-
+import json
 """
 Calculating Correlation Coefficients for Temperature and Precipitation data
 (altitude is set constant at z = 0)
@@ -30,14 +30,17 @@ def find_dp(Precip_ds):
     return dp_xr
    
 def txt_w(ctp, state):
-    if state == 1:
-        f = open(f'Correlation_Coefficients_coarse.txt','w')
-    else:
-        f = open(f'Correlation_Coefficients.txt','w')
-
+    coeffs = []
     for i in range(1,len(ctp),1):
-        f.write(f't (hours) = {i*3}: Correlation Coefficient = {ctp[i]}\n\n')
-    f.close()
+        coeffs.append({'Time(hrs)': i*3, 'Correlation Coefficient': ctp[i]})
+    
+    if state == 1:
+        with open('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_har_02/Correlation_Coeffs_Coarse.json','w') as json_file:
+            json.dump(coeffs, json_file, indent=2)
+    else:
+        with open('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_har_02/Correlation_Coeffs.json','w') as json_file:
+            json.dump(coeffs, json_file, indent=2)
+    
     return 'Coefficients saved to Correlation_Coefficients text files'
 def adjust_nan_T(dp, T):
     """
