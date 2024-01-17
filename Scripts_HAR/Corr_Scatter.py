@@ -30,7 +30,7 @@ def create_plot(coeff, time):
     """
     #plotting coefficients vs time
 
-    plt.scatter(coeff, time, label='Coeffs')
+    plt.scatter(time, coeff, label='Coeffs')
      
     plt.legend()
 
