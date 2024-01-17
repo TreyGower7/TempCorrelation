@@ -30,13 +30,8 @@ def create_plot(coeff, time):
     """
     #plotting coefficients vs time
 
-    plt.scatter(time, coeff, label='Coeffs')
-    
-    #trendline 
-    fit = np.polyfit(time, coeff, 1)
-    fit_fn = np.poly1d(fit)
-    
-    plt.plot(coeff,fit_fn(coeff),color='red', label='Trendline')
+    plt.scatter(coeff, time, label='Coeffs')
+     
     plt.legend()
 
     plt.xlabel('Time (hrs)')
@@ -51,15 +46,15 @@ def main():
 
     ctp = get_ctp()
     time_steps = len(ctp)
-    coeff = np.zeros([time_steps, 1])
-    time = np.zeros([time_steps, 1])
+    coeff = np.zeros([time_steps])
+    time = np.zeros([time_steps])
     
     for i in range(time_steps):
         coeff[i] = ctp[i]['Correlation Coefficient']
         time[i] = ctp[i]['Time(hrs)']
     
     #Generate Plot
-    create_plot(time.flatten(), coeff.flatten())
+    create_plot(time, coeff)
 
 if __name__ == "__main__":
     """ This is executed when run from the command line """
