@@ -29,8 +29,10 @@ def create_plot(coeff, time):
      Returns: Scatter Plot
     """
     #plotting coefficients vs time
+    x = time
+    y = coeff
 
-    plt.scatter(time, coeff, label='Coeffs')
+    plt.scatter(x, y, label='Coeffs')
      
     plt.legend()
 
