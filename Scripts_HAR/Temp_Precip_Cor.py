@@ -62,29 +62,33 @@ def coarse_grain(ds):
     Args:
     Ds = a dataset where the nan values are not yet masked 
     Returns:
-    coarse_avg = the coarse grained averages
+    sub_mat = the list of numpy sub matrices
     """
-    coarse_avg = np.zeros((66,1))
-    #In order for the average in the temperature data to reflect the precipitation values I need to remove the indices that are nan in precipitation
-    #The following two lines only work because I know I want my matrices to be 8x10 (I am intentionally excluding the last 6 hours)
-    m = len(ds)-24
-    n = len(ds[0])-9
+    # Get the dimensions
+    rows, cols = ds.shape
 
-    j = 0
-    #Create the sub matrix and caluclate the mean for each
-    for i in range(0,m,8):
-        #Need j to increment by 2 in order for our second index to reach 660
-        if i != 0:
-            #Must increment i value by 1 as to not include the previous index
-            sub_ds= ds[(i+1):i+8, (i+j)+1:(i+j)+10]
-            mask_ds= ma.masked_invalid(sub_ds)
+    # Define size for sub matrices
+    sub_mat_rows = 8
+    sub_mat_cols = 10
 
-        if i == 0:
-            sub_ds= ds[0:8, 0:10]
-            mask_ds= ma.masked_invalid(sub_ds)
-        j +=2
-        coarse_avg[i//8] = ma.mean(mask_ds)
-    return coarse_avg
+    # Calculate sub-matrices in each dimension
+    num_sub_mat_rows = rows // sub_mat_rows # Using floor division for zero remainder
+    num_sub_mat_cols = cols // sub_mat_cols # Using floor division for zero remainder
+
+    # Initialize list to store all sub matrices 
+    sub_mats = []
+
+    # Iterate through rows
+    for i in range(num_sub_mat_rows):
+        # Iterate through columns
+        for j in range(num_sub_mat_cols):
+            # Extracting each sub matrix
+            sub_mat = ds[i * sub_mat_rows: (i + 1) * sub_mat_rows,
+                               j * sub_mat_cols: (j + 1) * sub_mat_cols]
+            # Append the sub matrix to the list
+            sub_mats.append(sub_mat)
+
+    return sub_mats
 
 def main():
 
@@ -121,7 +125,6 @@ def main():
     
     ctp = []
     ctp_coarse = []
-    print(len(Temp_data))
     for i in range(len(dp)):
         #Skip time step t = 0
         print('...Calculating t = ' + str(i*3) + 'hrs...')
@@ -143,7 +146,6 @@ def main():
         #Calculate Coarse grained averages for sub matrices (masking doesnt occur until function coarse_grain is called here)
         coarse_dp = coarse_grain(dpnew)
         coarse_T = coarse_grain(nan_T)
-        
 
         #Mask averages that are close to zero
         coarse_dp = np.where(coarse_dp == 0, np.nan, coarse_dp)
@@ -159,7 +161,6 @@ def main():
 # Write outputs to text file
     txt_w(ctp,0)
     txt_w(ctp_coarse, 1)
-
     #close datasets
     ds_T.close()
     ds_P.close()
