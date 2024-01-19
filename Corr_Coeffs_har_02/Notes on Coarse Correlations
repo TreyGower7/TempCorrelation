@@ -1,7 +1,0 @@
-I was avergang the sub matrices and then caluclating the correlation coefficient from the list of averages.
-
-The Correlations from coarse graining much more accurately reflects our higher resolution model now that
-the correlation coefficient is being taken on each sub matrix and not on the list of already computed averages.
-
-Logically, this approach should've been used in the beginning since the correlation coefficient equation takes
-averages of each sub matrix and finds the difference between each value in the sub matrix. 
