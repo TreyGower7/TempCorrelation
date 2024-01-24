@@ -17,7 +17,9 @@ def get_ctp():
     try:
         with open('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_har_02/Correlation_Coeffs.json','r') as f:
             ctp = json.load(f)
-        return ctp
+        with open('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_har_02/Correlation_Coeffs_Coarse.json','r') as f:
+            ctp_coarse = json.load(f)
+        return ctp, ctp_coarse
     except:
         return 'failed to retrieve coefficients'
 
@@ -43,7 +45,7 @@ def high_low(coeff, time):
     
     return high, t_high, low, t_low
 
-def create_plot(coeff, time):
+def create_plot(coeff, time, coeff_coarse, time_coarse):
     """ Takes in coefficients and times and generates scatter plots
      
      Args: Coeffs, Time
@@ -51,10 +53,15 @@ def create_plot(coeff, time):
      Returns: Scatter Plot
     """
     High, t_high, Low, t_low = high_low(coeff, time)
+    High_coarse, t_high_coarse, Low_coarse, t_low_coarse = high_low(coeff_coarse, time_coarse)
 
-    plt.scatter(t_high, High, color='red', label = 'High Correlation')
+    plt.scatter(t_high, High, marker='o', facecolors='none', edgecolors='r', label = 'High Correlation')
     plt.show()
-    plt.scatter(t_low, Low, color='blue', label = 'Low Correlation')
+    plt.scatter(t_low, Low, marker='o', facecolors='none', edgecolors='b', label = 'Low Correlation')
+    plt.show()
+    plt.scatter(t_high_coarse, High_coarse, color='red', marker = 'v', label = 'Coarse High Correlation')
+    plt.show()
+    plt.scatter(t_low_coarse, Low_coarse, color='blue', marker = 'v', label = 'Coarse Low Correlation')
     
     plt.legend()
 
@@ -70,17 +77,23 @@ def create_plot(coeff, time):
 def main():
     """ Main function """
 
-    ctp = get_ctp()
+    ctp, ctp_coarse = get_ctp()
     time_steps = len(ctp)
     coeff = np.zeros([time_steps])
     time = np.zeros([time_steps])
     
+    coeff_coarse = np.zeros([time_steps])
+    time_coarse = np.zeros([time_steps])
+
     for i in range(time_steps):
         coeff[i] = ctp[i]['Correlation Coefficient']
         time[i] = ctp[i]['Time(hrs)']
+        
+        coeff_coarse[i] = ctp_coarse[i]['Correlation Coefficient']
+        time_coarse[i] = ctp_coarse[i]['Time(hrs)']
     
     #Generate Plot
-    create_plot(coeff, time)
+    create_plot(coeff, time, coeff_coarse, time_coarse)
 
 if __name__ == "__main__":
     """ This is executed when run from the command line """
