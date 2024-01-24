@@ -59,9 +59,9 @@ def create_plot(coeff, time, coeff_coarse, time_coarse):
     plt.show()
     plt.scatter(t_low, Low, marker='o', facecolors='none', edgecolors='b', label = 'Low Correlation')
     plt.show()
-    plt.scatter(t_high_coarse, High_coarse, color='red', marker = 'v', label = 'Coarse High Correlation')
+    plt.scatter(t_high_coarse, High_coarse, color='pink', marker = 'v', label = 'Coarse High Correlation')
     plt.show()
-    plt.scatter(t_low_coarse, Low_coarse, color='blue', marker = 'v', label = 'Coarse Low Correlation')
+    plt.scatter(t_low_coarse, Low_coarse, color='green', marker = 'v', label = 'Coarse Low Correlation')
     
     plt.legend()
 
