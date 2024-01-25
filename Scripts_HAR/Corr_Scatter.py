@@ -62,10 +62,10 @@ def create_plot(coeff, time, coeff_coarse, time_coarse):
     cb1.ax.invert_yaxis()
     
     plt.show()
-    #z = np.polyfit(time, coeff, 2)
-    #p = np.poly1d(z)
-    #ax.plot(time,p(time), color = 'blue')
-    #plt.show()
+    z = np.polyfit(time, coeff, 3)
+    p = np.poly1d(z)
+    ax.plot(time,p(time), color = 'blue')
+    plt.show()
     #Coarse Plot
     points = ax.scatter(time_coarse, coeff_coarse, c=coeff_coarse,label='Coarse Correlation', cmap = 'plasma',edgecolors = 'k',linewidth = .5, marker = 'v', s =15)
     cb = cbar.colorbar(points, label = 'Coarse')
