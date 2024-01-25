@@ -64,7 +64,8 @@ def create_plot(coeff, time, coeff_coarse, time_coarse):
     plt.scatter(t_low_coarse, Low_coarse, color='green', marker = 'v', label = 'Coarse Low Correlation')
     
     plt.legend()
-
+    
+    plt.gca().invert_yaxis()
     plt.xlabel('Time (hrs)')
     plt.ylabel('Coefficients')
     plt.title('Coarse/Non-Coarse Coefficient Scatter')
