@@ -54,24 +54,26 @@ def create_plot(coeff, time, coeff_coarse, time_coarse):
     """
     High, t_high, Low, t_low = high_low(coeff, time)
     High_coarse, t_high_coarse, Low_coarse, t_low_coarse = high_low(coeff_coarse, time_coarse)
-
-    #plt.scatter(t_high, High, marker='o', facecolors='none', edgecolors='r', label = 'High Correlation')
-    #plt.show()
-    #plt.scatter(t_low, Low, marker='o', facecolors='none', edgecolors='b', label = 'Low Correlation')
-    #plt.show()
-    #plt.scatter(t_high_coarse, High_coarse, color='pink', marker = 'v', label = 'Coarse High Correlation')
-    #plt.show()
-    #plt.scatter(t_low_coarse, Low_coarse, color='green', marker = 'v', label = 'Coarse Low Correlation')
     
+    #None coarse plot
     cbar, ax = plt.subplots()
     points = ax.scatter(time, coeff, c=coeff,label='Non-Coarse Correlation', cmap = 'rainbow')
     cb1 = cbar.colorbar(points, label = 'Non-Coarse')
     cb1.ax.invert_yaxis()
+    
     plt.show()
-
-    points = ax.scatter(time_coarse, coeff_coarse, c=coeff_coarse,label='Coarse Correlation', cmap = 'plasma',edgecolors = 'k',linewidth = .5, marker = 'v', s =13)
+    #z = np.polyfit(time, coeff, 2)
+    #p = np.poly1d(z)
+    #ax.plot(time,p(time), color = 'blue')
+    #plt.show()
+    #Coarse Plot
+    points = ax.scatter(time_coarse, coeff_coarse, c=coeff_coarse,label='Coarse Correlation', cmap = 'plasma',edgecolors = 'k',linewidth = .5, marker = 'v', s =15)
     cb = cbar.colorbar(points, label = 'Coarse')
     cb.ax.invert_yaxis()
+    #plt.show()
+    #z = np.polyfit(time_coarse, coeff_coarse, 2)
+    #p = np.poly1d(z)
+    #ax.plot(time_coarse,p(time_coarse), color = 'r')
     
     plt.legend() 
     plt.gca().invert_yaxis()
