@@ -75,14 +75,14 @@ def create_plot(coeff, time, coeff_coarse, time_coarse):
     ax.legend(handles=[Highres_leg,Coarse_leg],handlelength=0, handleheight=0)
 
     #Vertical lines
-    vertical_lines_x = [42, 70]
+    vertical_lines_x = [50, 70]
     for x_value in vertical_lines_x:
         plt.axvline(x=x_value, color='k', linestyle='--')
 
     plt.gca().invert_yaxis()
     plt.xlabel('time (hrs)')
     plt.ylabel('Correlation coefficient')
-    
+    plt.ylim([0,-.65])
     plt.show()
     plt.savefig('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_IDA_02/NC_Scatter_IDA')
     
