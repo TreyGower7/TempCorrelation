@@ -57,29 +57,21 @@ def create_plot(coeff, time, coeff_coarse, time_coarse):
     
     #None coarse plot
     cbar, ax = plt.subplots()
-    points = ax.scatter(time, coeff, c=coeff,label='Non-Coarse Correlation', cmap = 'rainbow')
-    cb1 = cbar.colorbar(points, label = 'Non-Coarse')
-    cb1.ax.invert_yaxis()
+    points = ax.scatter(time, coeff, c=coeff,label='High-resolution data', cmap = 'plasma', s=50)
     
-    plt.show()
-    z = np.polyfit(time, coeff, 3)
-    p = np.poly1d(z)
-    ax.plot(time,p(time), color = 'blue')
     plt.show()
     #Coarse Plot
-    points = ax.scatter(time_coarse, coeff_coarse, c=coeff_coarse,label='Coarse Correlation', cmap = 'plasma',edgecolors = 'k',linewidth = .5, marker = 'v', s =15)
-    cb = cbar.colorbar(points, label = 'Coarse')
+    points = ax.scatter(time_coarse, coeff_coarse, c=coeff_coarse,label='Coarse-grained data', cmap = 'plasma',edgecolors = 'k',linewidth = .5, marker = 'v', s =50)
+    cb = cbar.colorbar(points)
     cb.ax.invert_yaxis()
-    #plt.show()
-    #z = np.polyfit(time_coarse, coeff_coarse, 2)
-    #p = np.poly1d(z)
-    #ax.plot(time_coarse,p(time_coarse), color = 'r')
     
-    plt.legend() 
+    leg = plt.legend(handlelength=0, handleheight=0)
+    
+    leg.legend_handles[0].set_color('blue')
+    leg.legend_handles[1].set_color('blue')
     plt.gca().invert_yaxis()
-    plt.xlabel('Time (hrs)')
-    plt.ylabel('Coefficients')
-    plt.title('Coarse/Non-Coarse Coefficient Scatter')
+    plt.xlabel('time (hrs)')
+    plt.ylabel('Correlation coefficient')
     
     plt.show()
     plt.savefig('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_har_02/NC_Scatter')
