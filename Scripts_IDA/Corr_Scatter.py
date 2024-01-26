@@ -68,9 +68,9 @@ def create_plot(coeff, time, coeff_coarse, time_coarse):
     
     #Legend settings
     Coarse_leg = mlines.Line2D([], [], color='black', marker='v',
-                          markersize=7.5, label='Coarse-grained data')
+                          markersize=7.5, label='Coarse-grained data',fillstyle='none')
     Highres_leg = mlines.Line2D([], [], color='black', marker='o',
-                          markersize=7.5, label='High-resolution data')
+                          markersize=7.5, label='High-resolution data',fillstyle='none')
     
     ax.legend(handles=[Highres_leg,Coarse_leg],handlelength=0, handleheight=0)
 
