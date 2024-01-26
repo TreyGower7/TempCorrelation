@@ -1,6 +1,7 @@
 import numpy as np 
 import matplotlib.pyplot as plt
 import json
+import matplotlib.lines as mlines
 
 """
 Python script to generate scatter plots of my correlation coefficients plotting 
@@ -55,20 +56,29 @@ def create_plot(coeff, time, coeff_coarse, time_coarse):
     High, t_high, Low, t_low = high_low(coeff, time)
     High_coarse, t_high_coarse, Low_coarse, t_low_coarse = high_low(coeff_coarse, time_coarse)
     
-    #None coarse plot
+    #Hgh Res plot
     cbar, ax = plt.subplots()
-    points = ax.scatter(time, coeff, c=coeff,label='High-resolution data', cmap = 'plasma', s=50)
+    points = ax.scatter(time, coeff, c=coeff, cmap = 'plasma', s=100)
     
     plt.show()
     #Coarse Plot
-    points = ax.scatter(time_coarse, coeff_coarse, c=coeff_coarse,label='Coarse-grained data', cmap = 'plasma',edgecolors = 'k',linewidth = .5, marker = 'v', s =50)
+    points = ax.scatter(time_coarse, coeff_coarse, c=coeff_coarse, cmap = 'plasma',edgecolors = 'k',linewidth = .7, marker = 'v', s =100)
     cb = cbar.colorbar(points)
     cb.ax.invert_yaxis()
     
-    leg = plt.legend(handlelength=0, handleheight=0)
+    #Legend settings
+    Coarse_leg = mlines.Line2D([], [], color='black', marker='v',
+                          markersize=7.5, label='Coarse-grained data')
+    Highres_leg = mlines.Line2D([], [], color='black', marker='o',
+                          markersize=7.5, label='High-resolution data')
     
-    leg.legend_handles[0].set_color('blue')
-    leg.legend_handles[1].set_color('blue')
+    ax.legend(handles=[Highres_leg,Coarse_leg],handlelength=0, handleheight=0)
+
+    #Vertical lines
+    vertical_lines_x = [28, 75]
+    for x_value in vertical_lines_x:
+        plt.axvline(x=x_value, color='k', linestyle='--')
+
     plt.gca().invert_yaxis()
     plt.xlabel('time (hrs)')
     plt.ylabel('Correlation coefficient')
