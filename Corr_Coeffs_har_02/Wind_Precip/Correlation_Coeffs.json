@@ -1,0 +1,174 @@
+[
+  {
+    "Time(hrs)": 3,
+    "Correlation Coefficient": 0.556102893550912
+  },
+  {
+    "Time(hrs)": 6,
+    "Correlation Coefficient": 0.5536262292757658
+  },
+  {
+    "Time(hrs)": 9,
+    "Correlation Coefficient": 0.4418439216354754
+  },
+  {
+    "Time(hrs)": 12,
+    "Correlation Coefficient": 0.4843356373741039
+  },
+  {
+    "Time(hrs)": 15,
+    "Correlation Coefficient": 0.47635738334007266
+  },
+  {
+    "Time(hrs)": 18,
+    "Correlation Coefficient": 0.5407050820578377
+  },
+  {
+    "Time(hrs)": 21,
+    "Correlation Coefficient": 0.49012727082717367
+  },
+  {
+    "Time(hrs)": 24,
+    "Correlation Coefficient": 0.6474566978706342
+  },
+  {
+    "Time(hrs)": 27,
+    "Correlation Coefficient": 0.6202397804621317
+  },
+  {
+    "Time(hrs)": 30,
+    "Correlation Coefficient": 0.40100016285315165
+  },
+  {
+    "Time(hrs)": 33,
+    "Correlation Coefficient": 0.3667917303129162
+  },
+  {
+    "Time(hrs)": 36,
+    "Correlation Coefficient": 0.2827852476407909
+  },
+  {
+    "Time(hrs)": 39,
+    "Correlation Coefficient": 0.22114382915252026
+  },
+  {
+    "Time(hrs)": 42,
+    "Correlation Coefficient": 0.19919889190590587
+  },
+  {
+    "Time(hrs)": 45,
+    "Correlation Coefficient": 0.20485076851230113
+  },
+  {
+    "Time(hrs)": 48,
+    "Correlation Coefficient": 0.2639346073740156
+  },
+  {
+    "Time(hrs)": 51,
+    "Correlation Coefficient": 0.2742278089056174
+  },
+  {
+    "Time(hrs)": 54,
+    "Correlation Coefficient": 0.14532938482925195
+  },
+  {
+    "Time(hrs)": 57,
+    "Correlation Coefficient": 0.10965725081779869
+  },
+  {
+    "Time(hrs)": 60,
+    "Correlation Coefficient": 0.11698524975844057
+  },
+  {
+    "Time(hrs)": 63,
+    "Correlation Coefficient": 0.13214568238436727
+  },
+  {
+    "Time(hrs)": 66,
+    "Correlation Coefficient": 0.30478974899442374
+  },
+  {
+    "Time(hrs)": 69,
+    "Correlation Coefficient": 0.23226141390578847
+  },
+  {
+    "Time(hrs)": 72,
+    "Correlation Coefficient": 0.24128408279325222
+  },
+  {
+    "Time(hrs)": 75,
+    "Correlation Coefficient": 0.24148560606301747
+  },
+  {
+    "Time(hrs)": 78,
+    "Correlation Coefficient": 0.2386650961221423
+  },
+  {
+    "Time(hrs)": 81,
+    "Correlation Coefficient": 0.2188712765102326
+  },
+  {
+    "Time(hrs)": 84,
+    "Correlation Coefficient": 0.20117167209114406
+  },
+  {
+    "Time(hrs)": 87,
+    "Correlation Coefficient": 0.16173037470852142
+  },
+  {
+    "Time(hrs)": 90,
+    "Correlation Coefficient": 0.10793093753969818
+  },
+  {
+    "Time(hrs)": 93,
+    "Correlation Coefficient": 0.09319163272578722
+  },
+  {
+    "Time(hrs)": 96,
+    "Correlation Coefficient": 0.14271386548591883
+  },
+  {
+    "Time(hrs)": 99,
+    "Correlation Coefficient": 0.11952672263459879
+  },
+  {
+    "Time(hrs)": 102,
+    "Correlation Coefficient": 0.041737605225780496
+  },
+  {
+    "Time(hrs)": 105,
+    "Correlation Coefficient": 0.04891490571435726
+  },
+  {
+    "Time(hrs)": 108,
+    "Correlation Coefficient": 0.07177393170083034
+  },
+  {
+    "Time(hrs)": 111,
+    "Correlation Coefficient": 0.09246419208277801
+  },
+  {
+    "Time(hrs)": 114,
+    "Correlation Coefficient": 0.07251554314670736
+  },
+  {
+    "Time(hrs)": 117,
+    "Correlation Coefficient": 0.04376608163976732
+  },
+  {
+    "Time(hrs)": 120,
+    "Correlation Coefficient": 0.1009011608201461
+  },
+  {
+    "Time(hrs)": 123,
+    "Correlation Coefficient": -0.0055721337340376015
+  },
+  {
+    "Time(hrs)": 126,
+    "Correlation Coefficient": 0.047933139129509354
+  },
+  {
+    "Time(hrs)": 129,
+    "Correlation Coefficient": 0.08844071399922265
+  }
+]
