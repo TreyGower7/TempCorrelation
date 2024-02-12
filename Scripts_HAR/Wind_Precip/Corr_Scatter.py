@@ -58,7 +58,7 @@ def create_plot(coeff, time, coeff_coarse, time_coarse):
     
     #Hgh Res plot
     cbar, ax = plt.subplots()
-    points = ax.scatter(time, coeff, c=coeff, cmap = 'plasma', s=100)
+    points = ax.scatter(time, coeff, c=coeff, cmap = 'plasma_r', s=100)
     
     plt.show()
     #Coarse Plot
