@@ -64,7 +64,7 @@ def create_plot(coeff, time, coeff_coarse, time_coarse):
     #Coarse Plot
     points = ax.scatter(time_coarse, coeff_coarse, c=coeff_coarse, cmap = 'plasma',edgecolors = 'k',linewidth = .7, marker = 'v', s =100)
     cb = cbar.colorbar(points)
-    cb.ax.invert_yaxis()
+    #cb.ax.invert_yaxis()
     
     #Legend settings
     Coarse_leg = mlines.Line2D([], [], color='black', marker='v',
