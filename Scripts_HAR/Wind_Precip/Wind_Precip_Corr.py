@@ -137,7 +137,6 @@ def main():
     print("_________________________________________________\n")
     for i in range(0,len(W_U10),12):
         TotalW.append(Total_wind(W_U10[i],W_V10[i]))
-
 # Correlation
     print("...Finding Correlation Coefficient for each 3 hour time step...")
     print("_________________________________________________\n")

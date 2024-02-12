@@ -16,9 +16,9 @@ def get_ctp():
      Returns: Calculated coefficients for each time step
     """
     try:
-        with open('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_har_02/Correlation_Coeffs.json','r') as f:
+        with open('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_har_02/Wind_Precip/Correlation_Coeffs.json','r') as f:
             ctp = json.load(f)
-        with open('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_har_02/Correlation_Coeffs_Coarse.json','r') as f:
+        with open('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_har_02/Wind_Precip/Correlation_Coeffs_Coarse.json','r') as f:
             ctp_coarse = json.load(f)
         return ctp, ctp_coarse
     except:
@@ -84,7 +84,7 @@ def create_plot(coeff, time, coeff_coarse, time_coarse):
     plt.ylabel('Correlation coefficient')
     
     plt.show()
-    plt.savefig('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_har_02/NC_Scatter')
+    plt.savefig('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_har_02/Wind_Precip/NC_Scatter')
     
     print('Plot Generated')
 

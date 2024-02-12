@@ -9,6 +9,17 @@ Calculating Correlation Coefficients for Temperature and Precipitation data
 
 __author__ = "Trey Gower"
 
+def Total_wind(W_U10,W_V10):
+    """ Calculate Total wind from wind velocity profile for every 3 hours
+
+    Args: Wind velocity dataset
+
+    Returns: Total Wind vector
+    """
+
+    Total_W = ((W_U10**2)+(W_V10**2))**.5
+
+    return Total_W
 
 def find_dp(Precip_ds):
 
@@ -35,14 +46,14 @@ def txt_w(ctp, state):
         coeffs.append({'Time(hrs)': i*3, 'Correlation Coefficient': ctp[i]})
     
     if state == 1:
-        with open('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_IDA_02/Correlation_Coeffs_Coarse.json','w') as json_file:
+        with open('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_har_02/Wind_Precip/Correlation_Coeffs_Coarse.json','w') as json_file:
             json.dump(coeffs, json_file, indent=2)
     else:
-        with open('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_IDA_02/Correlation_Coeffs.json','w') as json_file:
+        with open('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_har_02/Wind_Precip/Correlation_Coeffs.json','w') as json_file:
             json.dump(coeffs, json_file, indent=2)
     
     return 'Coefficients saved to Correlation_Coefficients text files'
-def adjust_nan_T(dp, T):
+def adjust_nan_W(dp, T):
     """
     In order for the average in the temperature data to reflect the precipitation values I need to remove the indices that are nan in precipitation
 
@@ -92,33 +103,40 @@ def coarse_grain(ds):
 
 def main():
 
-    path = '/corral/utexas/hurricane/tgower/ida_dataset_02/Pot_Temp_HIDA_d02.nc'
-    ds_T = xr.open_dataset(path)
+    path = '/corral/utexas/hurricane/tgower/ida_dataset_02/WindVel_HIda_d02.nc'
+    ds_W = xr.open_dataset(path)
 
     path1 = '/corral/utexas/hurricane/tgower/ida_dataset_02/Precipt_HIDA_d02.nc'
     ds_P = xr.open_dataset(path1)
 
 # Access a specific variable
-    print("\n...Getting Temperature and Precipitation Data...")
+    print("\n...Getting Wind and Precipitation Data...")
     print("_________________________________________________\n")
 
 # Get Data
-    Temp_data = ds_T['T']
+    W_U10 = ds_W['U10']
+    W_V10 = ds_W['V10']
+    TotalW = []
+
     Precip_data = ds_P['RAIN_tot']
     print("...Populating Subsets...")
     print("_________________________________________________\n")
     dp = find_dp(Precip_data)    
 
     variable_names_P = ds_P.keys()
-    variable_names_T = ds_T.keys()
+    variable_names_W = ds_W.keys()
 
 #Key information
     print("\nKey Names: ")
     print(str(variable_names_P) + "\n")
     print("\nKey Names: ")
-    print(str(variable_names_T) + "\n")
+    print(str(variable_names_W) + "\n")
 
-
+    #Compute total winds
+    print("...Computing Total Winds...")
+    print("_________________________________________________\n")
+    for i in range(0,len(W_U10),12):
+        TotalW.append(Total_wind(W_U10[i],W_V10[i]))
 # Correlation
     print("...Finding Correlation Coefficient for each 3 hour time step...")
     print("_________________________________________________\n")
@@ -132,37 +150,37 @@ def main():
         #Masking the Nan values for precipitation
         mask_dp = ma.masked_invalid(dpnew)
 
-        Tnew = Temp_data[i*12][0].values.flatten()
+        Wnew = TotalW[i].values.flatten()
         
         #Calculate non-coarse grained correlation
-        ctp.append(ma.corrcoef(Tnew,mask_dp.flatten())[0,1])
+        ctp.append(ma.corrcoef(Wnew,mask_dp.flatten())[0,1])
 
         #Extra step #zeroing out corresponding temperature values with nan for coarse graining
-        nan_T = adjust_nan_T(dp[i].values.flatten(), Tnew)
+        nan_W = adjust_nan_W(dp[i].values.flatten(), Wnew)
 
         #revert Temp back to 2d for coarse graining
-        nan_T = nan_T.reshape(Temp_data[i*12][0].shape)
+        nan_W = nan_W.reshape(W_U10[0].shape)
         
         #Calculate Coarse grained averages for sub matrices (masking doesnt occur until function coarse_grain is called here)
         coarse_dp = coarse_grain(dpnew)
-        coarse_T = coarse_grain(nan_T)
+        coarse_W = coarse_grain(nan_W)
 
         #Mask averages that are close to zero
         coarse_dp = np.where(coarse_dp == 0, np.nan, coarse_dp)
-        coarse_T = np.where(coarse_T == 0, np.nan, coarse_T)
+        coarse_W = np.where(coarse_W == 0, np.nan, coarse_W)
         
         
         #Masking nan values
         mask_cdp = ma.masked_invalid(coarse_dp)
-        mask_cT = ma.masked_invalid(coarse_T)
+        mask_cW = ma.masked_invalid(coarse_W)
         
-        ctp_coarse.append(ma.corrcoef(mask_cT.flatten(),mask_cdp.flatten())[0,1])
+        ctp_coarse.append(ma.corrcoef(mask_cW.flatten(),mask_cdp.flatten())[0,1])
     
 # Write outputs to text file
     txt_w(ctp,0)
     txt_w(ctp_coarse, 1)
     #close datasets
-    ds_T.close()
+    ds_W.close()
     ds_P.close()
 
 if __name__ == "__main__":

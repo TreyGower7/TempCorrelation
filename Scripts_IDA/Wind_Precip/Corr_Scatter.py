@@ -16,9 +16,9 @@ def get_ctp():
      Returns: Calculated coefficients for each time step
     """
     try:
-        with open('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_IDA_02/Correlation_Coeffs.json','r') as f:
+        with open('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_har_02/Correlation_Coeffs.json','r') as f:
             ctp = json.load(f)
-        with open('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_IDA_02/Correlation_Coeffs_Coarse.json','r') as f:
+        with open('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_har_02/Correlation_Coeffs_Coarse.json','r') as f:
             ctp_coarse = json.load(f)
         return ctp, ctp_coarse
     except:
@@ -68,23 +68,23 @@ def create_plot(coeff, time, coeff_coarse, time_coarse):
     
     #Legend settings
     Coarse_leg = mlines.Line2D([], [], color='black', marker='v',
-                          markersize=7.5, label='Coarse-grained data',fillstyle='none')
+                          markersize=7.5, label='Coarse-grained data', fillstyle='none')
     Highres_leg = mlines.Line2D([], [], color='black', marker='o',
-                          markersize=7.5, label='High-resolution data',fillstyle='none')
+                          markersize=7.5, label='High-resolution data', fillstyle='none')
     
     ax.legend(handles=[Highres_leg,Coarse_leg],handlelength=0, handleheight=0)
 
     #Vertical lines
-    vertical_lines_x = [50, 70]
+    vertical_lines_x = [28, 75]
     for x_value in vertical_lines_x:
         plt.axvline(x=x_value, color='k', linestyle='--')
 
     plt.gca().invert_yaxis()
     plt.xlabel('time (hrs)')
     plt.ylabel('Correlation coefficient')
-    plt.ylim([0,-.65])
+    
     plt.show()
-    plt.savefig('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_IDA_02/NC_Scatter_IDA')
+    plt.savefig('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_har_02/NC_Scatter')
     
     print('Plot Generated')
 
