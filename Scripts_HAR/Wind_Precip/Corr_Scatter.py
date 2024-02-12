@@ -79,7 +79,7 @@ def create_plot(coeff, time, coeff_coarse, time_coarse):
     for x_value in vertical_lines_x:
         plt.axvline(x=x_value, color='k', linestyle='--')
 
-    plt.gca().invert_yaxis()
+    #plt.gca().invert_yaxis()
     plt.xlabel('time (hrs)')
     plt.ylabel('Correlation coefficient')
     
