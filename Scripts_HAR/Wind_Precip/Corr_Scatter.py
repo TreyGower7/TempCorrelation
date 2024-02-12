@@ -62,7 +62,7 @@ def create_plot(coeff, time, coeff_coarse, time_coarse):
     
     plt.show()
     #Coarse Plot
-    points = ax.scatter(time_coarse, coeff_coarse, c=coeff_coarse, cmap = 'plasma',edgecolors = 'k',linewidth = .7, marker = 'v', s =100)
+    points = ax.scatter(time_coarse, coeff_coarse, c=coeff_coarse, cmap = 'plasma_r',edgecolors = 'k',linewidth = .7, marker = 'v', s =100)
     cb = cbar.colorbar(points)
     #cb.ax.invert_yaxis()
     
