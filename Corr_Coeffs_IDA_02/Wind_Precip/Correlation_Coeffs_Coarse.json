@@ -1,0 +1,102 @@
+[
+  {
+    "Time(hrs)": 3,
+    "Correlation Coefficient": -0.06001370866602196
+  },
+  {
+    "Time(hrs)": 6,
+    "Correlation Coefficient": 0.06525471938895502
+  },
+  {
+    "Time(hrs)": 9,
+    "Correlation Coefficient": 0.04475728516259979
+  },
+  {
+    "Time(hrs)": 12,
+    "Correlation Coefficient": -0.07491801234478095
+  },
+  {
+    "Time(hrs)": 15,
+    "Correlation Coefficient": 0.006862960610239326
+  },
+  {
+    "Time(hrs)": 18,
+    "Correlation Coefficient": 0.012448979693974198
+  },
+  {
+    "Time(hrs)": 21,
+    "Correlation Coefficient": -0.010623888095654625
+  },
+  {
+    "Time(hrs)": 24,
+    "Correlation Coefficient": 0.22357481696129697
+  },
+  {
+    "Time(hrs)": 27,
+    "Correlation Coefficient": 0.5409329178140775
+  },
+  {
+    "Time(hrs)": 30,
+    "Correlation Coefficient": 0.6457611094628014
+  },
+  {
+    "Time(hrs)": 33,
+    "Correlation Coefficient": 0.7296955480623347
+  },
+  {
+    "Time(hrs)": 36,
+    "Correlation Coefficient": 0.6923495429295123
+  },
+  {
+    "Time(hrs)": 39,
+    "Correlation Coefficient": 0.6371634420077555
+  },
+  {
+    "Time(hrs)": 42,
+    "Correlation Coefficient": 0.6349100972324708
+  },
+  {
+    "Time(hrs)": 45,
+    "Correlation Coefficient": 0.6392297410669406
+  },
+  {
+    "Time(hrs)": 48,
+    "Correlation Coefficient": 0.5806951703516751
+  },
+  {
+    "Time(hrs)": 51,
+    "Correlation Coefficient": 0.6017399659370797
+  },
+  {
+    "Time(hrs)": 54,
+    "Correlation Coefficient": 0.5273587069472258
+  },
+  {
+    "Time(hrs)": 57,
+    "Correlation Coefficient": 0.4645322426133485
+  },
+  {
+    "Time(hrs)": 60,
+    "Correlation Coefficient": 0.3750008132214167
+  },
+  {
+    "Time(hrs)": 63,
+    "Correlation Coefficient": 0.36494416350693043
+  },
+  {
+    "Time(hrs)": 66,
+    "Correlation Coefficient": 0.2480234898990524
+  },
+  {
+    "Time(hrs)": 69,
+    "Correlation Coefficient": 0.20804553623997948
+  },
+  {
+    "Time(hrs)": 72,
+    "Correlation Coefficient": 0.22094690426897168
+  },
+  {
+    "Time(hrs)": 75,
+    "Correlation Coefficient": 0.19154562268201816
+  }
+]

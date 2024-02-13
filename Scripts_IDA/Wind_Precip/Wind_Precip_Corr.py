@@ -46,10 +46,10 @@ def txt_w(ctp, state):
         coeffs.append({'Time(hrs)': i*3, 'Correlation Coefficient': ctp[i]})
     
     if state == 1:
-        with open('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_har_02/Wind_Precip/Correlation_Coeffs_Coarse.json','w') as json_file:
+        with open('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_IDA_02/Wind_Precip/Correlation_Coeffs_Coarse.json','w') as json_file:
             json.dump(coeffs, json_file, indent=2)
     else:
-        with open('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_har_02/Wind_Precip/Correlation_Coeffs.json','w') as json_file:
+        with open('/corral/utexas/hurricane/tgower/TempCorrelation/Corr_Coeffs_IDA_02/Wind_Precip/Correlation_Coeffs.json','w') as json_file:
             json.dump(coeffs, json_file, indent=2)
     
     return 'Coefficients saved to Correlation_Coefficients text files'
@@ -103,7 +103,7 @@ def coarse_grain(ds):
 
 def main():
 
-    path = '/corral/utexas/hurricane/tgower/ida_dataset_02/WindVel_HIda_d02.nc'
+    path = '/corral/utexas/hurricane/skhani/Hur_Ida_Simul/OUTPUT_IDA_HURIC_HR/WindVel_HIDA_d02.nc'
     ds_W = xr.open_dataset(path)
 
     path1 = '/corral/utexas/hurricane/tgower/ida_dataset_02/Precipt_HIDA_d02.nc'
